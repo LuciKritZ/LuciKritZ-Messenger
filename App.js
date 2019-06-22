@@ -1,10 +1,10 @@
-import Welcome from './src/components/Welcome/index.js'
+import Login from './src/components/Login/index.js'
 import {createStackNavigator, createAppContainer} from 'react-navigation'
 
 const AppNavigator = createStackNavigator({
-  Welcome : {screen: Welcome}
+  Login : {screen: Login}
 }, {
-  initialRouteName: 'Welcome'
+  initialRouteName: 'Login'
 }, {
   headerMode: 'screen'
 });
