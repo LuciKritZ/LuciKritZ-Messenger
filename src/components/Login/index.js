@@ -4,8 +4,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import User from '../Info/userDetails';
 import styles from '../../constants/styles';
 import firebase from "firebase";
-// ---- For Splash Screen ----
-// import SplashScreen from 'react-native-splash-screen';
 
 export default class Login extends Component{
   static navigationOptions = {
@@ -19,16 +17,6 @@ export default class Login extends Component{
     // opacity: 0.5,
     // disabledStatus: true
   }
-
-  // ---- Splash Screen ----
-  // componentDidMount(){
-  //   SplashScreen.show();
-  //   setTimeout(() => {
-  //     SplashScreen.hide();
-  //     //call the API here
-  //     //This is where the real navigation will occur.
-  //   }, 1400)
-  // }
 
   componentWillMount(){
     AsyncStorage.getItem('userPhone').then(val => {

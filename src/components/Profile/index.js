@@ -51,11 +51,15 @@ export default class Profile extends React.Component {
                     value={this.state.name}
                     onChangeText={this.handleChange('name')}
                 />
-                <TouchableOpacity style={styles.btn} onPress={this.changeName}>
+                <TouchableOpacity style={styles.btn}
+                    // onPress={this.changeName}
+                >
                     <Text style={styles.btnText}>Change Name</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={this._logOut} style={styles.btn}>
+                <TouchableOpacity onPress={() => this._logOut}
+                // style={styles.btn}
+                >
                     <Text style={styles.btnText}>Logout</Text>
                 </TouchableOpacity>
             </SafeAreaView>

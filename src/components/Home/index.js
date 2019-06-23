@@ -39,6 +39,11 @@ export default class Home extends Component {
     });
   }
 
+  _logOut = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate("Auth");
+  };
+
   renderRow = ({ item }) => {
     return (
       <TouchableOpacity
@@ -58,6 +63,11 @@ export default class Home extends Component {
           renderItem={this.renderRow}
           keyExtractor={item => item.phone}
         />
+        <TouchableOpacity onPress={this._logOut}
+          style={styles.btn}
+        >
+          <Text style={styles.btnText}>Logout</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   }
