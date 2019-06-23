@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, Alert, TouchableOpacity, View, StatusBar, TextInput} from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
+import {Text, Alert, TouchableOpacity, View, StatusBar, TextInput} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import User from '../Info/userDetails'
+import styles from '../../constants/styles'
+// ---- For Splash Screen ----
+// import SplashScreen from 'react-native-splash-screen';
 
 export default class Login extends Component{
   static navigationOptions = {
@@ -16,12 +19,15 @@ export default class Login extends Component{
     // disabledStatus: true
   }
 
-  componentDidMount(){
-    SplashScreen.show();
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1400)
-  }
+  // ---- Splash Screen ----
+  // componentDidMount(){
+  //   SplashScreen.show();
+  //   setTimeout(() => {
+  //     SplashScreen.hide();
+  //     //call the API here
+  //     //This is where the real navigation will occur.
+  //   }, 1400)
+  // }
 
   componentWillMount(){
     AsyncStorage.getItem('userPhone').then(val => {
@@ -35,6 +41,7 @@ export default class Login extends Component{
     this.setState({
       [key]: val
     })
+
     // ---- Validations ----
     // if(this.state.phone.length < 10 || this.state.name.length < 1){
     //   this.setState({
@@ -48,6 +55,7 @@ export default class Login extends Component{
     //     disabledStatus: true
     //   })
     // }
+
   }
 
   submitForm = async () => {
@@ -57,6 +65,8 @@ export default class Login extends Component{
     else{
       //saving the data
       await AsyncStorage.setItem('userPhone', this.state.phone)
+      User.phone = this.state.phone;
+      this.props.navigation.navigate('App');
     }
     alert(this.state.phone +'\n'+this.state.name)
   }
@@ -92,32 +102,3 @@ export default class Login extends Component{
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  input:{
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#CCC",
-    width: '90%',
-    marginBottom: 10,
-    borderRadius: 5
-  },
-  btn:{
-    borderRadius: 5,
-    width: '50%',
-    backgroundColor: '#29c2d3',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-  },
-  btnText: {
-    color: '#fff',
-    fontSize: 20,
-  }
-})

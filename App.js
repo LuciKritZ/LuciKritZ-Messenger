@@ -1,7 +1,13 @@
+import Home from './src/components/Home/index.js'
 import Login from './src/components/Login/index.js'
-import {createStackNavigator, createAppContainer} from 'react-navigation'
+import AuthLoadingScreen from './src/components/Login/AuthLoadingScreen'
+import {createSwitchNavigator, createStackNavigator, createAppContainer} from 'react-navigation'
 
-const AppNavigator = createStackNavigator({
+const AppStack = createStackNavigator({
+  Home : {screen: Home}
+});
+
+const AuthStack = createStackNavigator({
   Login : {screen: Login}
 }, {
   initialRouteName: 'Login'
@@ -9,6 +15,13 @@ const AppNavigator = createStackNavigator({
   headerMode: 'screen'
 });
 
-const AppContainer = createAppContainer(AppNavigator);
-
-export default AppContainer;
+export default createAppContainer(createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: AppStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'AuthLoading'
+  }
+));
