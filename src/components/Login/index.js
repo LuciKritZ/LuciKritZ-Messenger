@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Text, Alert, TouchableOpacity, View, StatusBar, TextInput} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import User from '../Info/userDetails'
-import styles from '../../constants/styles'
+import User from '../Info/userDetails';
+import styles from '../../constants/styles';
+import firebase from "firebase";
 // ---- For Splash Screen ----
 // import SplashScreen from 'react-native-splash-screen';
 
@@ -66,6 +67,7 @@ export default class Login extends Component{
       //saving the data
       await AsyncStorage.setItem('userPhone', this.state.phone)
       User.phone = this.state.phone;
+      firebase.database().ref('users/' + User.phone).set({name: this.state.name});
       this.props.navigation.navigate('App');
     }
     alert(this.state.phone +'\n'+this.state.name)
