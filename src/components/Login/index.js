@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, Alert, TouchableOpacity, View, StatusBar, TextInput} from 'react-native';
+import {Text, Alert, TouchableOpacity, View, StatusBar, TextInput, Image, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import User from '../Info/userDetails';
 import styles from '../../constants/styles';
@@ -11,17 +11,17 @@ export default class Login extends Component{
   }
 
   state = {
-    phone: '',
-    name: '',
+    email: '',
+    password: '',
     // ---- Validations ----
     // opacity: 0.5,
     // disabledStatus: true
   }
 
   componentWillMount(){
-    AsyncStorage.getItem('userPhone').then(val => {
+    AsyncStorage.getItem('userEmail').then(val => {
       if(val){
-        this.setState({phone: val})
+        this.setState({email: val})
       }
     })
   }
@@ -30,65 +30,77 @@ export default class Login extends Component{
     this.setState({
       [key]: val
     })
-
-    // ---- Validations ----
-    // if(this.state.phone.length < 10 || this.state.name.length < 1){
-    //   this.setState({
-    //     opacity: 1,
-    //     disabledStatus: false
-    //   })
-    // }
-    // else{
-    //   this.setState({
-    //     opacity: 0.5,
-    //     disabledStatus: true
-    //   })
-    // }
-
   }
 
   submitForm = async () => {
-    if(this.state.name.length < 3){
-      Alert.alert('Error', 'Please choose a bigger name.')
-    }
-    else{
-      //saving the data
-      await AsyncStorage.setItem('userPhone', this.state.phone)
-      User.phone = this.state.phone;
-      firebase.database().ref('users/' + User.phone).set({name: this.state.name});
-      this.props.navigation.navigate('App');
-    }
-    alert(this.state.phone +'\n'+this.state.name)
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+      Alert.alert("Error", "No records found with this email address.")
+    });
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+      if(firebaseUser){
+        AsyncStorage.setItem('userEmail', this.state.email)
+        User.email = this.state.email;
+        User.details = firebaseUser;
+        this.props.navigation.navigate("App")
+      }
+    })
+  }
+
+  createAccount = () => {
+    this.props.navigation.navigate('Register')
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder= "Phone Number"
-          keyboardType= "number-pad"
-          style = {styles.input}
-          value = {this.state.phone}
-          onChangeText = {this.handleChange('phone')}
-          maxLength={10}
-        />
-        <TextInput
-          placeholder="Name"
-          style = {styles.input}
-          value = {this.state.name}
-          onChangeText = {this.handleChange('name')}
-          maxLength={30}
-        />
-        <TouchableOpacity
-          // ---- VALIDATIONS ----
-          // style={[styles.btn, {opacity: this.state.opacity}]}
-          // disabled={this.state.disabledStatus}
-          style={styles.btn}
-          onPress={this.submitForm}
-        >
-          <Text style={styles.btnText}>Enter</Text>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.mainContainer}>
+        <View style={styles.logoContainer}>
+            <Image
+                source={require('../../images/logo.png')}
+            />
+        </View>
+        <ScrollView>
+          <View style={styles.container}>
+            <StatusBar backgroundColor="#29c2d3" barStyle="light-content" />
+            <Text style={{margin: "3%"}}>Login Here!</Text>
+            <TextInput
+                placeholder= "Email"
+                keyboardType= "email-address"
+                style = {styles.input}
+                value = {this.state.email}
+                onChangeText = {this.handleChange('email')}
+                returnKeyType="next"
+                autoCapitalize="none"
+                autoCorrect={false}
+            />
+            <TextInput
+                placeholder="Password"
+                style = {styles.input}
+                value = {this.state.password}
+                onChangeText = {this.handleChange('password')}
+                maxLength={30}
+                autoCapitalize = "none"
+                secureTextEntry = {true}
+            />
+            <TouchableOpacity
+                style={[styles.btn, {margin: "4%"}]}
+                onPress={this.submitForm}
+            >
+            <Text style={styles.btnText}>Enter</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{marginTop: 40}}
+              onPress={this.createAccount}
+            >
+              <Text>New here? Click here to register.</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+    </View>
     );
   }
 }

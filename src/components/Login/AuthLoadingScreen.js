@@ -16,14 +16,14 @@ export default class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    User.phone = await AsyncStorage.getItem("userPhone");
+    User.email = await AsyncStorage.getItem("userEmail");
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     SplashScreen.show();
     setTimeout(() => {
       SplashScreen.hide();
-      this.props.navigation.navigate(User.phone ? "App" : "Auth");
+      this.props.navigation.navigate(User.email ? "App" : "Auth");
       //call the API here
       //This is where the real navigation will occur.
     }, 1400)

@@ -30,7 +30,7 @@ export default class Profile extends React.Component {
             Alert.alert('Error', 'Please enter a valid name.')
         }
         else if(User.name !== this.state.name){
-            firebase.database().ref('users').child(User.phone).set({name: this.state.name});
+            firebase.database().ref('users').child(User.email).set({name: this.state.name});
             User.name = this.state.name;
             Alert.alert('Success', 'Name changed successfully!')
         }
@@ -40,7 +40,7 @@ export default class Profile extends React.Component {
         return (
             <SafeAreaView style={styles.container}>
                 <Text style={{fontSize: 20, }}>
-                    {User.phone}
+                    {User.email}
                 </Text>
                 <Text >
                     {User.name}

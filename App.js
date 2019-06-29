@@ -1,8 +1,10 @@
+import './src/components/Info/fixTimerError'
 import Home from './src/components/Home/index.js';
 import Login from './src/components/Login/index.js';
 import ChatScreen from './src/components/Chats/index.js';
 import Profile from './src/components/Profile/index.js';
-import AuthLoadingScreen from './src/components/Login/AuthLoadingScreen'
+import AuthLoadingScreen from './src/components/Login/AuthLoadingScreen';
+import Register from './src/components/Register/index'
 import {createSwitchNavigator, createStackNavigator, createAppContainer} from 'react-navigation'
 
 const AppStack = createStackNavigator({
@@ -12,7 +14,8 @@ const AppStack = createStackNavigator({
 });
 
 const AuthStack = createStackNavigator({
-  Login : {screen: Login}
+  Login : {screen: Login},
+  Register: {screen: Register}
 }, {
   initialRouteName: 'Login'
 }, {

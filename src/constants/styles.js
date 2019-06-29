@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
   },
   input: {
     padding: 10,
@@ -22,7 +21,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#29c2d3",
     justifyContent: "center",
     alignItems: "center",
-    padding: 10
+    padding: 10,
+    opacity: 1
   },
   btnText: {
     color: "#ccc",
@@ -35,6 +35,29 @@ const styles = StyleSheet.create({
   },
   listText: {
       fontSize: 20,
+  },
+  validations : {
+    padding: 10,
+    borderColor: "#CCC",
+    width: "90%",
+    marginBottom: 10,
+    borderRadius: 5,
+    backgroundColor: "#F67280"
+  },
+  logoContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
+    height: "20%"
+  },
+  formRegister: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  mainContainer:{
+    backgroundColor: "#F5FCFF",
+    height: "100%"
   }
 });
 

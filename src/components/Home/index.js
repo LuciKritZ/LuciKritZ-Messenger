@@ -41,7 +41,8 @@ export default class Home extends Component {
 
   _logOut = async () => {
     await AsyncStorage.clear();
-    this.props.navigation.navigate("Auth");
+    firebase.auth().signOut();
+    this.props.navigation.navigate("AuthLoading");
   };
 
   renderRow = ({ item }) => {
