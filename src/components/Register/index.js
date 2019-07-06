@@ -61,6 +61,7 @@ export default class Register extends Component{
   render() {
     var passw=  /^(?=.*[0-9])(?=.*[!@#$%^&*_])[a-zA-Z0-9!@#$%^&*_]{7,15}$/;
     var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var name = /^[a-z0-9_-]{3,16}$/;
     return (
         <View style={styles.mainContainer}>
             <View style={styles.logoContainer}>
@@ -112,21 +113,21 @@ export default class Register extends Component{
                         </View>
                     }
                     <TextInput
-                        placeholder="Full Name"
+                        placeholder="username"
                         style = {styles.input}
                         value = {this.state.name}
                         onChangeText = {this.handleChange('name')}
-                        maxLength={30}
+                        maxLength={13}
+                        autoCapitalize = "none"
                     />
                     {
-                        this.state.name == "" ?
+                        this.state.name.match(name)?
+                        null: 
                         <View style={styles.validations}>
                             <Text>
-                                Name can not be empty.
+                              username should not be contain space and can not be empty.
                             </Text>
                         </View>
-                        :
-                        null
                     }
                     <TouchableOpacity
                         style={[styles.btn, {margin: "4%"}]}

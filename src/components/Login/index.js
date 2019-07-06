@@ -33,23 +33,28 @@ export default class Login extends Component{
   }
 
   submitForm = async () => {
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-      Alert.alert("Error", "No records found with this email address.")
-    });
-    firebase.auth().onAuthStateChanged(firebaseUser => {
-      if(firebaseUser){
-        AsyncStorage.setItem('userEmail', this.state.email)
-        User.email = this.state.email;
-        User.details = firebaseUser;
-        console.warn(User.details)
-        this.props.navigation.navigate("App");
-      }
-    })
+    if(this.state.email=='' || this.state.password==''){
+      Alert.alert("Error", "Please fill all the details.");
+    }
+    else{
+      firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+        Alert.alert("Error", "Email and password do not match.")
+      });
+      firebase.auth().onAuthStateChanged(firebaseUser => {
+        if(firebaseUser){
+          AsyncStorage.setItem('userEmail', this.state.email)
+          User.email = this.state.email;
+          User.details = firebaseUser;
+          console.warn(User.details)
+          this.props.navigation.navigate("App");
+        }
+      })
+    }
   }
 
   createAccount = () => {

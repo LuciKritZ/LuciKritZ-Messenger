@@ -1,4 +1,3 @@
-import React from "react";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -37,6 +36,7 @@ const styles = StyleSheet.create({
       fontSize: 20,
   },
   validations : {
+    fontSize:5,
     padding: 10,
     borderColor: "#CCC",
     width: "90%",
