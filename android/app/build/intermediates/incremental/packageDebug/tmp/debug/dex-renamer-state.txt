@@ -1,0 +1,4 @@
+#Fri Jun 28 22:52:09 IST 2019
+base.0=/home/krishals_001/Documents/ChatApp/firebaseChatApp/android/app/build/intermediates/transforms/dexMerger/debug/0
+renamed.0=classes.dex
+path.0=classes.dex
